@@ -1,0 +1,107 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "submit": "Submit",
+    "currency": "SAR",
+    "back": "Back"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "confirmPassword": "Confirm Password"
+  },
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "myItems": "My Items",
+    "myAccount": "My Account",
+    "settings": "Settings"
+  },
+  "profile": {
+    "title": "Profile",
+    "accountInfo": "Account Information",
+    "passwordChange": "Password",
+    "wallet": "Wallet",
+    "region": "Region",
+    "city": "City",
+    "updateProfile": "Update Information",
+    "updating": "Updating...",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "updatePassword": "Update Password"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "balance": "Points Balance",
+    "points": "Points",
+    "description": "You can use points for purchases and exchanges"
+  },
+  "items": {
+    "title": "Items",
+    "addItem": "Add Item",
+    "editItem": "Edit Item",
+    "deleteItem": "Delete Item",
+    "itemName": "Item Name",
+    "itemNameAr": "Item Name (Arabic)",
+    "itemNameEn": "Item Name (English)",
+    "itemDescription": "Item Description",
+    "itemDescriptionAr": "Item Description (Arabic)",
+    "itemDescriptionEn": "Item Description (English)",
+    "price": "Price",
+    "category": "Category",
+    "quantity": "Quantity",
+    "estimatedValue": "Estimated Value",
+    "explore": "Explore",
+    "exploreDescription": "Find the items you want and start exchanging",
+    "noResults": "No results found",
+    "noResultsDescription": "Try searching with different keywords or browse all items",
+    "notFound": "Item not found",
+    "backToItems": "Back to Items",
+    "availableQuantity": "Available Quantity",
+    "dateAdded": "Date Added",
+    "requestExchange": "Request Exchange",
+    "zoomHint": "Use mouse wheel to zoom"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "copyright": "© 2026 SAFQA. ALL RIGHTS RESERVED."
+  },
+  "home": {
+    "badge": "The Future of Bartering • KSA 2026",
+    "heroTitle1": "Give what you",
+    "heroTitle2": "don't need",
+    "heroTitle3": "and get what you're missing.",
+    "heroDescription": "Turn your possessions into real value. Safqa is your destination to exchange everything you own for what you need, with a click of a button.",
+    "startNow": "Start Now",
+    "users": "+50K Users",
+    "secure": "Secure via Nafath",
+    "feature1Title": "Lightning Fast",
+    "feature1Description": "Exchange your items in minutes. Our system connects you instantly with the right party.",
+    "feature2Title": "Absolute Security",
+    "feature2Description": "Your identity is verified, your deals are protected, and user ratings are transparent.",
+    "feature3Title": "Smart Economy",
+    "feature3Description": "Save your money and recycle your possessions to get what you want without needing cash.",
+    "trustedBy": "Trusted by the community in",
+    "ctaTitle": "Ready to close your next deal?",
+    "ctaButton": "Sign Up Now — Free"
+  },
+  "messages": {
+    "success": "Operation completed successfully",
+    "error": "Something went wrong",
+    "profileUpdated": "Profile updated successfully",
+    "passwordUpdated": "Password updated successfully",
+    "loginSuccess": "Logged in successfully",
+    "logoutSuccess": "Logged out successfully"
+  }
+}

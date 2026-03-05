@@ -1,0 +1,107 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "search": "بحث",
+    "submit": "إرسال",
+    "currency": "ر.س",
+    "back": "العودة"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم",
+    "confirmPassword": "تأكيد كلمة المرور"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "explore": "العروض",
+    "myItems": "عناصري",
+    "myAccount": "حسابي",
+    "settings": "الإعدادات"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "accountInfo": "معلومات الحساب",
+    "passwordChange": "كلمة المرور",
+    "wallet": "المحفظة",
+    "region": "المنطقة",
+    "city": "المدينة",
+    "updateProfile": "تحديث المعلومات",
+    "updating": "جاري التحديث...",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "updatePassword": "تحديث كلمة المرور"
+  },
+  "wallet": {
+    "title": "المحفظة",
+    "balance": "رصيد النقاط",
+    "points": "نقطة",
+    "description": "يمكنك استخدام النقاط في عمليات الشراء والتبادل"
+  },
+  "items": {
+    "title": "العناصر",
+    "addItem": "إضافة عنصر",
+    "editItem": "تعديل العنصر",
+    "deleteItem": "حذف العنصر",
+    "itemName": "اسم العنصر",
+    "itemNameAr": "اسم العنصر (عربي)",
+    "itemNameEn": "اسم العنصر (إنجليزي)",
+    "itemDescription": "وصف العنصر",
+    "itemDescriptionAr": "الوصف التفصيلي (عربي)",
+    "itemDescriptionEn": "الوصف التفصيلي (إنجليزي)",
+    "price": "السعر",
+    "category": "الفئة",
+    "quantity": "الكمية",
+    "estimatedValue": "القيمة التقديرية",
+    "explore": "استكشف",
+    "exploreDescription": "ابحث عن العناصر التي تريدها وابدأ التبادل",
+    "noResults": "لا توجد نتائج",
+    "noResultsDescription": "جرب البحث بكلمات مختلفة أو تصفح جميع العناصر",
+    "notFound": "العنصر غير موجود",
+    "backToItems": "العودة للعناصر",
+    "availableQuantity": "الكمية المتاحة",
+    "dateAdded": "تاريخ الإضافة",
+    "requestExchange": "طلب تبادل",
+    "zoomHint": "استخدم عجلة الماوس للتكبير"
+  },
+  "footer": {
+    "privacy": "الخصوصية",
+    "terms": "الشروط",
+    "contact": "تواصل معنا",
+    "copyright": "© 2026 صفقة. جميع الحقوق محفوظة."
+  },
+  "home": {
+    "badge": "مستقبل المقايضة • السعودية 2026",
+    "heroTitle1": "عطهم اللي",
+    "heroTitle2": "ما تحتاجه",
+    "heroTitle3": "وخذ اللي ناقصك.",
+    "heroDescription": "حوّل ممتلكاتك إلى قيمة حقيقية. صفقة هي وجهتك لمقايضة كل ما تملك بما تحتاجه، بضغطة زر.",
+    "startNow": "ابدأ الآن",
+    "users": "+50 ألف مستخدم",
+    "secure": "آمن عبر نفاذ",
+    "feature1Title": "سرعة البرق",
+    "feature1Description": "بدّل أغراضك في دقائق. نظامنا يربطك فوراً بالطرف المناسب.",
+    "feature2Title": "أمان مطلق",
+    "feature2Description": "هويتك موثقة، صفقاتك محمية، وتقييمات المستخدمين شفافة.",
+    "feature3Title": "اقتصاد ذكي",
+    "feature3Description": "وفّر أموالك وقم بتدوير ممتلكاتك لتصل لما تريد دون الحاجة للكاش.",
+    "trustedBy": "موثوق به في المجتمعات",
+    "ctaTitle": "جاهز تخلّص صفقتك الجاية؟",
+    "ctaButton": "سجل الآن — مجاناً"
+  },
+  "messages": {
+    "success": "تمت العملية بنجاح",
+    "error": "حدث خطأ ما",
+    "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
+    "passwordUpdated": "تم تحديث كلمة المرور بنجاح",
+    "loginSuccess": "تم تسجيل الدخول بنجاح",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح"
+  }
+}

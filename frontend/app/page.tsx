@@ -1,228 +1,174 @@
 'use client';
 
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowLeftRight, ShieldCheck, Zap, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import Header from '@/components/Header';
+import { useI18n } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
-import { itemsApi } from '@/lib/api';
-import { Item } from '@/types';
 
-export default function Home() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+export default function HomePage() {
+  const { t, locale } = useI18n();
+  const [districts, setDistricts] = useState<any[]>([]);
+  const isRtl = locale === 'ar';
 
   useEffect(() => {
-    fetchItems();
+    fetch('/saudiareasjson/districts_lite.json')
+      .then(res => res.json())
+      .then(data => {
+        const uniqueDistricts = data.slice(0, 50);
+        setDistricts(uniqueDistricts);
+      });
   }, []);
 
-  const fetchItems = async () => {
-    try {
-      const response = await itemsApi.getAll();
-      setItems(response.data);
-    } catch (error) {
-      console.error('Error fetching items:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) {
-      fetchItems();
-      return;
-    }
-    try {
-      const response = await itemsApi.search(searchQuery);
-      setItems(response.data);
-    } catch (error) {
-      console.error('Error searching items:', error);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">صفقة</h1>
-                <p className="text-xs text-gray-500">منصة التبادل الذكي</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button className="px-5 py-2.5 text-gray-700 hover:bg-gray-100 rounded-xl font-medium transition-all">
-                عناصري
-              </button>
-              <button className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-medium">
-                + إضافة عنصر
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-[#F9F9F9] text-[#0F0F0F] font-sans antialiased selection:bg-[#1A1A1A] selection:text-white" dir={isRtl ? 'rtl' : 'ltr'}>
+      <Header />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-10">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold text-gray-900 mb-3">اكتشف وتبادل</h2>
-            <p className="text-lg text-gray-600">ابحث عن العناصر التي تريدها وابدأ التبادل</p>
-          </div>
-          
-          <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="ابحث عن أي شيء..."
-                className="w-full px-6 py-5 pr-14 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all text-right text-lg shadow-sm"
-              />
-              <button
-                type="submit"
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-            </div>
-          </form>
-        </div>
-
-        {loading ? (
-          <div className="flex justify-center items-center h-96">
-            <div className="relative">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
-                onClick={() => setSelectedItem(item)}
-              >
-                <div className="relative h-56 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                      <span className="text-5xl">
-                        {item.category_id === 1 ? '📱' : 
-                         item.category_id === 2 ? '🛋️' :
-                         item.category_id === 3 ? '👔' :
-                         item.category_id === 4 ? '📚' :
-                         item.category_id === 5 ? '⚽' :
-                         item.category_id === 6 ? '🎮' :
-                         item.category_id === 7 ? '🚗' : '🏠'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="absolute top-4 right-4 px-3 py-1.5 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-700 shadow-sm">
-                    الكمية: {item.qty}
-                  </div>
-                </div>
-                
-                <div className="p-5">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 text-right group-hover:text-blue-600 transition-colors">{item.name}</h3>
-                  <p className="text-gray-600 mb-4 text-right text-sm line-clamp-2 leading-relaxed">{item.description}</p>
-                  
-                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-                    <div className="text-right">
-                      <div className="text-xs text-gray-500 mb-1">القيمة التقديرية</div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        {item.price.toLocaleString()} ر.س
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold text-base group-hover:scale-[1.02] flex items-center justify-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                    </svg>
-                    طلب تبادل
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {!loading && items.length === 0 && (
-          <div className="text-center py-20">
-            <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-6xl">🔍</span>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">لا توجد نتائج</h3>
-            <p className="text-gray-600 text-lg">جرب البحث بكلمات مختلفة أو تصفح جميع العناصر</p>
-          </div>
-        )}
-      </div>
-
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <div className="relative h-80 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-              <button 
-                onClick={() => setSelectedItem(null)}
-                className="absolute top-4 left-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors z-10"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-40 h-40 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                  <span className="text-7xl">
-                    {selectedItem.category_id === 1 ? '📱' : 
-                     selectedItem.category_id === 2 ? '🛋️' :
-                     selectedItem.category_id === 3 ? '👔' :
-                     selectedItem.category_id === 4 ? '📚' :
-                     selectedItem.category_id === 5 ? '⚽' :
-                     selectedItem.category_id === 6 ? '🎮' :
-                     selectedItem.category_id === 7 ? '🚗' : '🏠'}
-                  </span>
-                </div>
-              </div>
+      <section className="relative pt-24 pb-12 md:pt-32 md:pb-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className={`flex flex-col ${isRtl ? 'items-start text-right' : 'items-start text-left'}`}>
+            
+            <div className="flex items-center gap-2 mb-6 bg-[#1A1A1A] text-white px-3 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest">{t('home.badge')}</span>
             </div>
             
-            <div className="p-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4 text-right">{selectedItem.name}</h2>
-              <p className="text-gray-600 mb-6 text-right leading-relaxed text-lg">{selectedItem.description}</p>
-              
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-5 text-right">
-                  <div className="text-sm text-gray-600 mb-1">القيمة التقديرية</div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    {selectedItem.price.toLocaleString()} ر.س
-                  </div>
-                </div>
-                <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-5 text-right">
-                  <div className="text-sm text-gray-600 mb-1">الكمية المتاحة</div>
-                  <div className="text-3xl font-bold text-gray-900">{selectedItem.qty}</div>
-                </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tight mb-8 max-w-5xl">
+              {t('home.heroTitle1')} <span className="text-amber-500">{t('home.heroTitle2')}</span>
+              <br />
+              <span className="text-[#A1A1A1] inline-block mt-2">{t('home.heroTitle3')}</span>
+            </h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full items-center">
+              <div className="md:col-span-7">
+                <p className="text-lg md:text-xl font-medium text-[#444] leading-relaxed max-w-xl">
+                  {t('home.heroDescription')}
+                </p>
               </div>
               
-              <button className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl hover:shadow-xl transition-all font-bold text-lg flex items-center justify-center gap-3">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-                اختر عنصرك للتبادل
-              </button>
+              <div className={`md:col-span-5 flex flex-col ${isRtl ? 'md:items-end' : 'md:items-start'} gap-4`}>
+                <Link href="/auth" className="group">
+                  <div className="flex items-center gap-4 bg-[#1A1A1A] text-white px-6 py-4 rounded-xl hover:bg-black transition-all">
+                    <span className="text-xl font-black">{t('home.startNow')}</span>
+                    <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center group-hover:bg-amber-500 transition-colors">
+                      {isRtl ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                    </div>
+                  </div>
+                </Link>
+                <div className="flex gap-4 text-[10px] font-bold text-[#888] uppercase tracking-widest px-2">
+                  <span>{t('home.users')}</span>
+                  <span>•</span>
+                  <span>{t('home.secure')}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </section>
+
+      <section className="px-6 py-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-[#1A1A1A] text-white p-10 rounded-[2rem] flex flex-col justify-between h-[380px] group overflow-hidden relative">
+            <Zap className={`w-10 h-10 text-amber-400 absolute top-8 ${isRtl ? 'left-8' : 'right-8'} opacity-20 group-hover:opacity-100 transition-opacity`} />
+            <div className="mt-auto">
+              <h3 className="text-3xl font-black mb-3">{t('home.feature1Title')}</h3>
+              <p className="text-gray-400 text-base leading-snug">
+                {t('home.feature1Description')}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white border border-[#EEE] p-10 rounded-[2rem] flex flex-col justify-between h-[380px] shadow-sm">
+            <div className="flex justify-between items-start">
+              <div className="w-14 h-14 bg-[#F5F5F5] rounded-xl flex items-center justify-center">
+                <ShieldCheck className="w-7 h-7 text-black" />
+              </div>
+              <ArrowUpRight className="text-[#CCC] w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-3xl font-black mb-3 text-[#1A1A1A]">{t('home.feature2Title')}</h3>
+              <p className="text-[#666] text-base leading-snug">
+                {t('home.feature2Description')}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-amber-400 p-10 rounded-[2rem] flex flex-col justify-between h-[380px]">
+             <div className="text-5xl font-black leading-none tracking-tighter text-amber-900/20 italic uppercase">0% Cash</div>
+             <div>
+              <h3 className="text-3xl font-black mb-3 text-amber-950">{t('home.feature3Title')}</h3>
+              <p className="text-amber-900/70 text-base leading-snug font-bold">
+                {t('home.feature3Description')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 border-y border-[#EEE] bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-[10px] font-black uppercase tracking-[0.4em] text-[#AAA] mb-10">{t('home.trustedBy')}</p>
+          <div className="relative">
+            <div className={`flex ${isRtl ? 'animate-scroll-rtl' : 'animate-scroll-ltr'} gap-8`}>
+              {districts.concat(districts).map((district, index) => (
+                <span key={index} className="text-lg font-black whitespace-nowrap opacity-30 hover:opacity-100 transition-opacity">
+                  {isRtl ? district.name_ar : district.name_en}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-10 text-[#1A1A1A]">
+            {t('home.ctaTitle')}
+          </h2>
+          <Link href="/auth">
+            <button className="bg-[#1A1A1A] text-white text-xl font-black px-12 py-6 rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl">
+              {t('home.ctaButton')}
+            </button>
+          </Link>
+        </div>
+      </section>
+
+      <footer className="bg-white py-12 px-6 border-t border-[#EEE]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+               <ArrowLeftRight className="w-5 h-5 text-white" />
+             </div>
+             <span className="font-black text-xl tracking-tighter">صفقة</span>
+          </div>
+          
+          <div className="flex gap-6 text-[10px] font-black uppercase tracking-widest text-[#666]">
+            <Link href="#" className="hover:text-black">{t('footer.privacy')}</Link>
+            <Link href="#" className="hover:text-black">{t('footer.terms')}</Link>
+            <Link href="#" className="hover:text-black">{t('footer.contact')}</Link>
+          </div>
+
+          <p className="text-[#BBB] text-[10px] font-bold">{t('footer.copyright')}</p>
+        </div>
+      </footer>
+
+      <style jsx>{`
+        @keyframes scroll-ltr {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-rtl {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(50%); }
+        }
+        .animate-scroll-ltr {
+          animation: scroll-ltr 40s linear infinite;
+        }
+        .animate-scroll-rtl {
+          animation: scroll-rtl 40s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
